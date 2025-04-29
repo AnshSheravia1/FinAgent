@@ -85,7 +85,7 @@ Date,Description,Amount
 - Backend:
   - Node.js
   - Express
-  - Groq API (Mixtral-8x7b-32768)
+  - Groq API (llama-3.3-70b-versatile)
   - csv-parse
   - multer
 
