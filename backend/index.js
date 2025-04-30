@@ -8,7 +8,17 @@ require('dotenv').config();
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
-app.use(cors());
+// CORS configuration
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://anshsheravia1.github.io',
+    'https://anshsheravia1.github.io/FinAgent'
+  ],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
+
 app.use(express.json());
 
 // Format date from DD/MM/YYYY to YYYY-MM-DD
