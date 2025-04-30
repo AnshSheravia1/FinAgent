@@ -88,7 +88,7 @@ const processTransactions = async (transactions) => {
 - amount: number (positive for income, negative for expenses)
 - category: string (e.g., "Food & Dining", "Transportation", "Income", "Shopping", "Entertainment", "Bills & Utilities")
 - flag: string (must be exactly one of: "Normal", "Suspicious", "Anomaly")
-- suggestion: string (optional financial advice)
+- suggestion(optional): string (optional financial advice), give the suggestion only if the expense seems to be more than what is expected from the particular category.
 
 Rules for categorization:
 1. Salary/Income -> "Income"
@@ -171,14 +171,32 @@ Return ONLY the JSON array, no other text or explanation. Every transaction must
 app.post('/api/analyze', upload.single('file'), async (req, res) => {
   try {
     console.log('Received file upload request');
+    if (!req.file) {
+      console.error('No file uploaded');
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+    
+    console.log('File details:', {
+      filename: req.file.filename,
+      path: req.file.path,
+      size: req.file.size
+    });
+
     const transactions = await parseCSV(req.file.path);
-    console.log('Parsed transactions:', transactions);
+    console.log('Parsed transactions:', JSON.stringify(transactions, null, 2));
+    
+    if (!transactions || transactions.length === 0) {
+      console.error('No transactions found in file');
+      return res.status(400).json({ error: 'No valid transactions found in file' });
+    }
+
     const analyzedTransactions = await processTransactions(transactions);
-    console.log('Analyzed transactions:', analyzedTransactions);
+    console.log('Analyzed transactions:', JSON.stringify(analyzedTransactions, null, 2));
+    
     res.json(analyzedTransactions);
   } catch (error) {
     console.error('Error in /api/analyze:', error);
-    res.status(500).json({ error: 'Failed to process file' });
+    res.status(500).json({ error: error.message || 'Failed to process file' });
   }
 });
 
