@@ -4,6 +4,9 @@ import ResultsViewer from './components/ResultsViewer';
 import ErrorBoundary from './components/ErrorBoundary';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
+// API endpoint configuration
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
 function App() {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -21,7 +24,8 @@ function App() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:3001/api/analyze', {
+      console.log('Sending request to:', `${API_BASE_URL}/api/analyze`);
+      const response = await fetch(`${API_BASE_URL}/api/analyze`, {
         method: 'POST',
         body: formData,
       });

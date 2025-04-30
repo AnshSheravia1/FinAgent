@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/FinAgent/static/css/main.070d1001.css",
+    "main.js": "/FinAgent/static/js/main.de5d6e11.js",
+    "index.html": "/FinAgent/index.html",
+    "main.070d1001.css.map": "/FinAgent/static/css/main.070d1001.css.map",
+    "main.de5d6e11.js.map": "/FinAgent/static/js/main.de5d6e11.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.070d1001.css",
+    "static/js/main.de5d6e11.js"
+  ]
+}
